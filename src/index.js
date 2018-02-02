@@ -2,7 +2,6 @@ import { h, app } from "hyperapp";
 import "./style.css";
 
 const MEDIA_CONST = {'mandatory': {'OfferToReceiveAudio':true, 'OfferToReceiveVideo':true }};
-const ICE_SEPARATOR = '------ ICE Candidate -------';
 
 const state = {
   count: 0,
