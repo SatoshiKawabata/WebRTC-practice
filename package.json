@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "rm -rd .cache/ ; ./node_modules/.bin/parcel -d docs ./src/index.html",
+    "start": "rm -rd .cache/ ; ./node_modules/.bin/parcel ./src/index.html",
+    "deploy": "rm -rd ./docs ; cp -rf ./dist ./docs",
     "sample": "./node_modules/.bin/parcel ./src/sample.html"
   },
   "author": "",

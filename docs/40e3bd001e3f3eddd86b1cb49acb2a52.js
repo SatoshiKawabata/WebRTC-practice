@@ -1483,7 +1483,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '53046' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '55360' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -1585,4 +1585,4 @@ function hmrAccept(bundle, id) {
   });
 }
 },{}]},{},[20,4])
-//# sourceMappingURL=/docs/40e3bd001e3f3eddd86b1cb49acb2a52.map
+//# sourceMappingURL=/dist/40e3bd001e3f3eddd86b1cb49acb2a52.map
