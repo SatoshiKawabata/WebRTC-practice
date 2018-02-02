@@ -1398,8 +1398,8 @@ var view = function view(state, actions) {
     (0, _hyperapp.h)(
       "div",
       null,
-      (0, _hyperapp.h)("video", { src: state.selfVideoSrc, autoplay: "true" }),
-      (0, _hyperapp.h)("video", { src: state.partnerVideoSrc, autoplay: "true" })
+      (0, _hyperapp.h)("video", { src: state.selfVideoSrc, autoplay: true, controls: true }),
+      (0, _hyperapp.h)("video", { src: state.partnerVideoSrc, autoplay: true, controls: true })
     ),
     (0, _hyperapp.h)(
       "div",
@@ -1411,7 +1411,7 @@ var view = function view(state, actions) {
       ),
       (0, _hyperapp.h)(
         "textarea",
-        { rows: "5", cols: "100", disabled: "true" },
+        { rows: "5", cols: "100", disabled: true },
         JSON.stringify(state.selfSDP)
       )
     ),
@@ -1440,7 +1440,7 @@ var view = function view(state, actions) {
       ),
       (0, _hyperapp.h)(
         "textarea",
-        { rows: "5", cols: "100", disabled: "true" },
+        { rows: "5", cols: "100", disabled: true },
         JSON.stringify(state.selfICEs)
       )
     ),
@@ -1483,7 +1483,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '50963' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '53046' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

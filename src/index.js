@@ -123,12 +123,12 @@ const view = (state, actions) => {
     <button type="button" onclick={actions.startVideo}>ビデオキャプチャ開始</button>
     <button type="button" onclick={actions.connect}>接続開始</button>
     <div>
-      <video src={state.selfVideoSrc} autoplay="true"></video>
-      <video src={state.partnerVideoSrc} autoplay="true"></video>
+      <video src={state.selfVideoSrc} autoplay controls></video>
+      <video src={state.partnerVideoSrc} autoplay controls></video>
     </div>
     <div>
       <p>自分のSDP(相手に教える必要がある)</p>
-      <textarea rows="5" cols="100" disabled="true">{JSON.stringify(state.selfSDP)}</textarea>
+      <textarea rows="5" cols="100" disabled>{JSON.stringify(state.selfSDP)}</textarea>
     </div>
     <div>
       <p>相手のSDP(自分が知る必要がある)</p>
@@ -137,7 +137,7 @@ const view = (state, actions) => {
     </div>
     <div>
       <p>自分のICE Candidate(相手に教える必要がある)</p>
-      <textarea rows="5" cols="100" disabled="true">{JSON.stringify(state.selfICEs)}</textarea>
+      <textarea rows="5" cols="100" disabled>{JSON.stringify(state.selfICEs)}</textarea>
     </div>
     <div>
       <p>相手のICE Candidate(自分が知る必要がある)</p>
