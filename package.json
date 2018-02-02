@@ -1,0 +1,20 @@
+{
+  "name": "webrtc-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rm -rd .cache/ ; ./node_modules/.bin/parcel -d docs ./src/index.html",
+    "sample": "./node_modules/.bin/parcel ./src/sample.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-hyperapp": "^2.3.0",
+    "parcel-bundler": "^1.5.1"
+  },
+  "dependencies": {
+    "hyperapp": "^1.0.2"
+  }
+}
