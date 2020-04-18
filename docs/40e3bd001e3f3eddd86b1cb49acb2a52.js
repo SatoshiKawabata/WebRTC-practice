@@ -1214,18 +1214,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var MEDIA_CONST = { 'mandatory': { 'OfferToReceiveAudio': true, 'OfferToReceiveVideo': true } };
-var ICE_SEPARATOR = '------ ICE Candidate -------';
+var MEDIA_CONST = {
+  mandatory: { OfferToReceiveAudio: true, OfferToReceiveVideo: true }
+};
+
+var ICE_SERVER = { url: "stun:stun.l.google.com:19302" };
 
 var state = {
   count: 0,
-  selfVideoSrc: "",
   selfStream: null,
   peer: null,
   selfSDP: null,
   partnerSDP: null,
   partnerStream: null,
-  partnerVideoSrc: "",
   selfICEs: [],
   partnerICEs: []
 };
@@ -1251,7 +1252,10 @@ var actions = {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                return navigator.mediaDevices.getUserMedia({
+                  video: true,
+                  audio: true
+                });
 
               case 2:
                 stream = _context.sent;
@@ -1273,14 +1277,19 @@ var actions = {
   },
 
   setSelfStream: function setSelfStream(stream) {
-    return { selfStream: stream, selfVideoSrc: URL.createObjectURL(stream) };
+    document.querySelector("#self-video").srcObject = stream;
+    return {
+      selfStream: stream
+    };
   },
 
   connect: function connect() {
     return function (state, actions) {
       var peer = function () {
         // peer connectionを新規作成
-        var p = new RTCPeerConnection({ iceServers: [] });
+        var p = new RTCPeerConnection({
+          iceServers: [ICE_SERVER]
+        });
         p.onicecandidate = function (e) {
           console.log("on candidate", e.candidate);
           if (e.candidate) {
@@ -1309,7 +1318,10 @@ var actions = {
   },
 
   setPartnerStream: function setPartnerStream(stream) {
-    return { partnerStream: stream, partnerVideoSrc: URL.createObjectURL(stream) };
+    document.querySelector("#partner-video").srcObject = stream;
+    return {
+      partnerStream: stream
+    };
   },
 
   onReceivePartnerSDP: function onReceivePartnerSDP(e) {
@@ -1331,7 +1343,7 @@ var actions = {
         // offerが来たのでanswerを作成する
         peer = function () {
           // create peer connection
-          var p = new RTCPeerConnection({ iceServers: [] });
+          var p = new RTCPeerConnection({ iceServers: [ICE_SERVER] });
           p.onicecandidate = function (e) {
             if (e.candidate) {
               actions.setSelfICE(e.candidate);
@@ -1398,8 +1410,8 @@ var view = function view(state, actions) {
     (0, _hyperapp.h)(
       "div",
       null,
-      (0, _hyperapp.h)("video", { src: state.selfVideoSrc, autoplay: true, controls: true }),
-      (0, _hyperapp.h)("video", { src: state.partnerVideoSrc, autoplay: true, controls: true })
+      (0, _hyperapp.h)("video", { id: "self-video", autoplay: true, controls: true }),
+      (0, _hyperapp.h)("video", { id: "partner-video", autoplay: true, controls: true })
     ),
     (0, _hyperapp.h)(
       "div",
@@ -1423,7 +1435,11 @@ var view = function view(state, actions) {
         null,
         "\u76F8\u624B\u306ESDP(\u81EA\u5206\u304C\u77E5\u308B\u5FC5\u8981\u304C\u3042\u308B)"
       ),
-      (0, _hyperapp.h)("textarea", { rows: "5", cols: "100", onchange: actions.onReceivePartnerSDP }),
+      (0, _hyperapp.h)("textarea", {
+        rows: "5",
+        cols: "100",
+        onchange: actions.onReceivePartnerSDP
+      }),
       (0, _hyperapp.h)(
         "button",
         { type: "button", onclick: actions.setPartnerSDP },
@@ -1452,7 +1468,11 @@ var view = function view(state, actions) {
         null,
         "\u76F8\u624B\u306EICE Candidate(\u81EA\u5206\u304C\u77E5\u308B\u5FC5\u8981\u304C\u3042\u308B)"
       ),
-      (0, _hyperapp.h)("textarea", { rows: "5", cols: "100", onchange: actions.onReceivePartnerICE }),
+      (0, _hyperapp.h)("textarea", {
+        rows: "5",
+        cols: "100",
+        onchange: actions.onReceivePartnerICE
+      }),
       (0, _hyperapp.h)(
         "button",
         { type: "button", onclick: actions.setPartnerICE },
@@ -1483,7 +1503,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '55360' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '55910' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

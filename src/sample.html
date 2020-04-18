@@ -3,8 +3,8 @@
 <head>
   <title>WebRTC 1 to 1 handshake</title>
   <style>
-    video: {
-      width: 10px;
+    video {
+      width: 200px;
     }
   </style>
 </head>
@@ -16,8 +16,8 @@
   <button type="button" onclick="hangUp();">Hang Up</button>
   <br />
   <div>
-   <video id="local-video" autoplay style="width: 10px; height: 10px; border: 1px solid black;"></video>
-   <video id="remote-video" autoplay style="width: 10px; height: 10px; border: 1px solid black;"></video>
+   <video id="local-video" autoplay></video>
+   <video id="remote-video" autoplay></video>
   </div>
 
   <p>
@@ -126,7 +126,11 @@
 	navigator.webkitGetUserMedia({video: true, audio: false},
     function (stream) { // success
       localStream = stream;
-      localVideo.src = window.webkitURL.createObjectURL(stream);
+      try {
+        localVideo.src = window.webkitURL.createObjectURL(stream);
+      } catch(e) {
+        localVideo.srcObject = stream;
+      }
       localVideo.play();
 	  localVideo.volume = 0;
     },
@@ -176,7 +180,11 @@
     // when remote adds a stream, hand it on to the local video element
     function onRemoteStreamAdded(event) {
       console.log("Added remote stream");
-      remoteVideo.src = window.webkitURL.createObjectURL(event.stream);
+      try {
+        remoteVideo.src = window.webkitURL.createObjectURL(event.stream);
+      } catch(e) {
+        remoteVideo.srcObject = event.stream;
+      }
     }
 
     // when remote removes a stream, remove it from the local video element
